@@ -1,5 +1,5 @@
-CREATE database YIMP
-use YIMP
+CREATE database Gestionale
+use Gestionale
 
 CREATE TABLE Fornitori(
 	IdFornitore int NOT NULL,
