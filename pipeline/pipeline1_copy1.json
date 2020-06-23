@@ -1,0 +1,253 @@
+{
+	"name": "pipeline1_copy1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET",
+							"requestTimeout": ""
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "data",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "data",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "stato",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "stato",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ricoverati_con_sintomi",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ricoverati_con_sintomi",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "terapia_intensiva",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "terapia_intensiva",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "totale_ospedalizzati",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "totale_ospedalizzati",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "isolamento_domiciliare",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "isolamento_domiciliare",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "totale_positivi",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "totale_positivi",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "variazione_totale_positivi",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "variazione_totale_positivi",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "nuovi_positivi",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "nuovi_positivi",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "dimessi_guariti",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "dimessi_guariti",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "deceduti",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "deceduti",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "totale_casi",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "totale_casi",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "tamponi",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "tamponi",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "casi_testati",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "casi_testati",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "note_it",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "note_it",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "note_en",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "note_en",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
