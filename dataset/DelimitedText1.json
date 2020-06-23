@@ -1,0 +1,86 @@
+{
+	"name": "DelimitedText1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "HttpServer2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "data",
+				"type": "String"
+			},
+			{
+				"name": "stato",
+				"type": "String"
+			},
+			{
+				"name": "ricoverati_con_sintomi",
+				"type": "String"
+			},
+			{
+				"name": "terapia_intensiva",
+				"type": "String"
+			},
+			{
+				"name": "totale_ospedalizzati",
+				"type": "String"
+			},
+			{
+				"name": "isolamento_domiciliare",
+				"type": "String"
+			},
+			{
+				"name": "totale_positivi",
+				"type": "String"
+			},
+			{
+				"name": "variazione_totale_positivi",
+				"type": "String"
+			},
+			{
+				"name": "nuovi_positivi",
+				"type": "String"
+			},
+			{
+				"name": "dimessi_guariti",
+				"type": "String"
+			},
+			{
+				"name": "deceduti",
+				"type": "String"
+			},
+			{
+				"name": "totale_casi",
+				"type": "String"
+			},
+			{
+				"name": "tamponi",
+				"type": "String"
+			},
+			{
+				"name": "casi_testati",
+				"type": "String"
+			},
+			{
+				"name": "note_it",
+				"type": "String"
+			},
+			{
+				"name": "note_en",
+				"type": "String"
+			}
+		]
+	}
+}
