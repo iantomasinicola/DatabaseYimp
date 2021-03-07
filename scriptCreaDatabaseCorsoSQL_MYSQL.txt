@@ -1,0 +1,116 @@
+CREATE SCHEMA CorsoSQL;
+
+create table CorsoSQL.clienti ( NumeroCliente int null, Nome varchar(50) null, Cognome varchar(50) null, DataNascita date null, RegioneResidenza varchar(50) null);
+
+create table CorsoSQL.clientiEsteri ( NumeroCliente int null, Nome varchar(50), Cognome varchar(50), DataNascita date, Nazione varchar(50), FlagUE bit);
+
+create table CorsoSQL.fatture (NumeroFattura int, Tipologia varchar(1), Importo int,  Iva int,  IdCliente int,  ResidenzaCliente varchar(50),  DataFattura date);
+
+create table CorsoSQL.fornitori ( NumeroFornitore varchar(50), Denominazione varchar(50),  RegioneResidenza varchar(50),  DataPrimaAcquisto date, FornitoreAttivo bit,  DataFineContratto varchar(10));
+
+create table CorsoSQL.prodotti (IdProdotto int, Descrizione varchar(50), InProduzione bit, InCommercio bit, RegioneProduzione varchar(50),  DataAttivazione date, DataDisattivazione date, Costo decimal(18,2), CentralitaBusiness int);
+
+INSERT INTO CorsoSQL.clienti (NumeroCliente, Nome, Cognome, DataNascita, RegioneResidenza) VALUES (1, 'Nicola', 'Iantomasi', '19801017', 'Piemonte');
+
+INSERT INTO CorsoSQL.clienti (NumeroCliente, Nome, Cognome, DataNascita, RegioneResidenza) VALUES (2, 'Francesco', 'Rossi', '19821217', 'Molise');
+
+INSERT INTO CorsoSQL.clienti (NumeroCliente, Nome, Cognome, DataNascita, RegioneResidenza) VALUES (3, 'Alberto', 'Verdi', '19830103', 'Campania');
+
+INSERT INTO CorsoSQL.clienti (NumeroCliente, Nome, Cognome, DataNascita, RegioneResidenza) VALUES (4, 'Giovanni ', 'Limone', '19800501', 'Campania');
+
+INSERT INTO CorsoSQL.clienti (NumeroCliente, Nome, Cognome, DataNascita, RegioneResidenza) VALUES (5, 'Angelo', 'Verdi', '19800407', 'Puglia');
+
+INSERT INTO CorsoSQL.clienti (NumeroCliente, Nome, Cognome, DataNascita, RegioneResidenza) VALUES (6, 'Alberto', 'Marino', '19800203', 'Lombardia');
+
+INSERT INTO CorsoSQL.clienti (NumeroCliente, Nome, Cognome, DataNascita, RegioneResidenza) VALUES (7, 'Maria', 'Guarino', '19800108', 'Lombardia');
+
+INSERT INTO CorsoSQL.clienti (NumeroCliente, Nome, Cognome, DataNascita, RegioneResidenza) VALUES (8, 'Giacomo', 'Sacco', '19801011', 'Lombardia');
+
+INSERT INTO CorsoSQL.clienti (NumeroCliente, Nome, Cognome, DataNascita, RegioneResidenza) VALUES (9, 'Giovanni ', 'Botta', '19801211', 'Campania');
+
+INSERT INTO CorsoSQL.clienti (NumeroCliente, Nome, Cognome, DataNascita, RegioneResidenza) VALUES (10, 'Nicola', 'Limone', '19801011', 'Piemonte');
+
+INSERT INTO CorsoSQL.clientiEsteri (NumeroCliente, Nome, Cognome, DataNascita, Nazione, FlagUE) VALUES (1, 'Nicolaz', 'Iantomasi', '19801017', 'Germania', 1);
+
+INSERT INTO CorsoSQL.clientiEsteri (NumeroCliente, Nome, Cognome, DataNascita, Nazione, FlagUE) VALUES (2, 'Francescoz', 'Rossi', '19821217', 'Germania', 1);
+
+INSERT INTO CorsoSQL.clientiEsteri (NumeroCliente, Nome, Cognome, DataNascita, Nazione, FlagUE) VALUES (3, 'Albertos', 'Verdi', '19830103', 'Brasile', 0);
+
+INSERT INTO CorsoSQL.clientiEsteri (NumeroCliente, Nome, Cognome, DataNascita, Nazione, FlagUE) VALUES (4, 'Giovanniz', 'Limone', '19800501', 'Germania', 1);
+
+INSERT INTO CorsoSQL.clientiEsteri (NumeroCliente, Nome, Cognome, DataNascita, Nazione, FlagUE) VALUES (5, 'Angelos', 'Verdi', '19800407', 'Brasile', 0);
+
+INSERT INTO CorsoSQL.clientiEsteri (NumeroCliente, Nome, Cognome, DataNascita, Nazione, FlagUE) VALUES (6, 'Albertotz', 'Marino', '19800203', 'Belgio', 1);
+
+INSERT INTO CorsoSQL.clientiEsteri (NumeroCliente, Nome, Cognome, DataNascita, Nazione, FlagUE) VALUES (7, 'Marianne', 'Guarino', '19800108', 'Francia', 1);
+
+INSERT INTO CorsoSQL.clientiEsteri (NumeroCliente, Nome, Cognome, DataNascita, Nazione, FlagUE) VALUES (8, 'Giacomoz', 'Sacco', '19801011', 'Germania', 1);
+
+INSERT INTO CorsoSQL.clientiEsteri (NumeroCliente, Nome, Cognome, DataNascita, Nazione, FlagUE) VALUES (9, 'Jeanne', 'Botta', '19801211', 'Francia', 1);
+
+INSERT INTO CorsoSQL.clientiEsteri (NumeroCliente, Nome, Cognome, DataNascita, Nazione, FlagUE) VALUES (10, 'Nicola', 'Limone', '19801011', NULL, NULL);
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (1, 'A', 120, 20, 1, 'Molise', '20180101');
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (2, 'V', 32, 20, 2, 'Puglia', '20170301');
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (3, 'A', 45, 20, 3, 'Lombardia', '20170601');
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (4, 'V', 64, 20, 3, 'Lombardia', '20190130');
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (5, 'A', 12, 20, 5, 'Umbria', '20180101');
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (6, 'V', 31, 20, 6, 'Trentino', '20170301');
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (7, 'A', 12, 20, 3, 'Lombardia', '20170601');
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (8, 'V', 54, 20, 8, 'Abruzzo', '20190130');
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (9, 'A', 67, 20, 3, 'Lombardia', '20180101');
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (10, 'A', 51, 20, 8, 'Abruzzo', '20170301');
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (11, 'A', 21, 20, 2, 'Puglia', '20170601');
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (12, 'A', 57, 20, 7, 'Marche', '20190130');
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (13, 'V', 87, 20, 2, 'Puglia', '20160103');
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (14, 'V', 12, 22, 4, 'Piemonte', '20170920');
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (15, 'A', 34, 20, 1, 'Molise', '20170601');
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (16, 'V', 21, 20, 1, 'Molise', '20190205');
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (17, 'V', 1, 20, 5, 'Umbria', '20190105');
+
+INSERT INTO CorsoSQL.fatture (NumeroFattura, Tipologia, Importo, Iva, IdCliente, ResidenzaCliente, DataFattura) VALUES (18, 'V', 2, 20, 4, 'Piemonte', '20180301');
+
+INSERT INTO CorsoSQL.fornitori (NumeroFornitore, Denominazione, RegioneResidenza, DataPrimaAcquisto, FornitoreAttivo, DataFineContratto) VALUES (NULL, NULL, NULL, NULL, NULL, NULL);
+
+INSERT INTO CorsoSQL.fornitori (NumeroFornitore, Denominazione, RegioneResidenza, DataPrimaAcquisto, FornitoreAttivo, DataFineContratto) VALUES ('1', 'Bartolini', 'Lombardia', '20170502', 1, '2019-05-01');
+
+INSERT INTO CorsoSQL.fornitori (NumeroFornitore, Denominazione, RegioneResidenza, DataPrimaAcquisto, FornitoreAttivo, DataFineContratto) VALUES ('2', 'Pirelli', 'Piemonte', '20140102', 1, '2019-06-30');
+
+INSERT INTO CorsoSQL.fornitori (NumeroFornitore, Denominazione, RegioneResidenza, DataPrimaAcquisto, FornitoreAttivo, DataFineContratto) VALUES ('3', 'Fiat', 'Lombardia', '20180302', 0, '2018-05-30');
+
+INSERT INTO CorsoSQL.fornitori (NumeroFornitore, Denominazione, RegioneResidenza, DataPrimaAcquisto, FornitoreAttivo, DataFineContratto) VALUES ('4', 'Mercedes', 'Puglia', '20190102', 1, '2018-08-30');
+
+INSERT INTO CorsoSQL.fornitori (NumeroFornitore, Denominazione, RegioneResidenza, DataPrimaAcquisto, FornitoreAttivo, DataFineContratto) VALUES ('5', 'Tenaris', 'Marche', '20180602', 0, '2018-05-30');
+
+INSERT INTO CorsoSQL.prodotti (IdProdotto, Descrizione, InProduzione, InCommercio, RegioneProduzione, DataAttivazione, DataDisattivazione, Costo, CentralitaBusiness) VALUES (1, 'carrelli', 1, 1, 'Lombardia', '20100101', NULL, 1000.00, 5);
+
+INSERT INTO CorsoSQL.prodotti (IdProdotto, Descrizione, InProduzione, InCommercio, RegioneProduzione, DataAttivazione, DataDisattivazione, Costo, CentralitaBusiness) VALUES (2, 'auto', 1, 0, 'Lombardia', '20170101', NULL, 20000.00, 3);
+
+INSERT INTO CorsoSQL.prodotti (IdProdotto, Descrizione, InProduzione, InCommercio, RegioneProduzione, DataAttivazione, DataDisattivazione, Costo, CentralitaBusiness) VALUES (3, 'camion', 1, 0, 'Lombardia', '20170101', NULL, 50000.00, 2);
+
+INSERT INTO CorsoSQL.prodotti (IdProdotto, Descrizione, InProduzione, InCommercio, RegioneProduzione, DataAttivazione, DataDisattivazione, Costo, CentralitaBusiness) VALUES (4, 'pick up', 1, 1, 'Piemoente', '20110101', NULL, 20000.00, 5);
+
+INSERT INTO CorsoSQL.prodotti (IdProdotto, Descrizione, InProduzione, InCommercio, RegioneProduzione, DataAttivazione, DataDisattivazione, Costo, CentralitaBusiness) VALUES (5, 'moto', 0, 0, NULL, '20110101', '20150101', 8000.00, 1);
+
+INSERT INTO CorsoSQL.prodotti (IdProdotto, Descrizione, InProduzione, InCommercio, RegioneProduzione, DataAttivazione, DataDisattivazione, Costo, CentralitaBusiness) VALUES (6, 'scooter', 1, 1, 'Puglia', '20120101', NULL, 4000.00, 3);
+
+INSERT INTO CorsoSQL.prodotti (IdProdotto, Descrizione, InProduzione, InCommercio, RegioneProduzione, DataAttivazione, DataDisattivazione, Costo, CentralitaBusiness) VALUES (7, 'navi', 1, 1, 'puglia', '20120101', NULL, 100000.00, 5);
+
+INSERT INTO CorsoSQL.prodotti (IdProdotto, Descrizione, InProduzione, InCommercio, RegioneProduzione, DataAttivazione, DataDisattivazione, Costo, CentralitaBusiness) VALUES (8, 'ascensori', 1, 1, 'puglia', '20150101', NULL, 30000.00, 1);
+
