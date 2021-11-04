@@ -67,7 +67,6 @@ CREATE TABLE Gestionale.Prodotti(
 	Categoria varchar(50) NOT NULL,
 	Target varchar(50) NOT NULL);
 
-INSERT INTO Gestionale.Clienti (IdCliente, IsActive, Nome, Cognome, DataNascita, Nazione, Regione, Cap, Telefono, Fax, Email) VALUES (1, 1, 'Nicola', '5CF71', CAST('2010-01-01' AS Date), 'Francia', null, '81622', '39 320 3231251', NULL, 'Nicola.5CF71@gmail.com');
 INSERT INTO Gestionale.Clienti (IdCliente, IsActive, Nome, Cognome, DataNascita, Nazione, Regione, Cap, Telefono, Fax, Email) VALUES (2, 1, 'Giovanni', 'A83C2', CAST('1976-03-01' AS Date), 'Italia', 'Lazio', '82786', '320 3231251', '320 3231251', 'Giovanni.A83C2tiscali.com');
 INSERT INTO Gestionale.Clienti (IdCliente, IsActive, Nome, Cognome, DataNascita, Nazione, Regione, Cap, Telefono, Fax, Email) VALUES (3, 1, 'Marco', '7929A', CAST('1980-04-01' AS Date), 'Italia', 'Lazio', '19341', '+(39) 320 32312', '+(39) 320 32312', 'Marco.7929A@gmail.com');
 INSERT INTO Gestionale.Clienti (IdCliente, IsActive, Nome, Cognome, DataNascita, Nazione, Regione, Cap, Telefono, Fax, Email) VALUES (4, 1, 'Giovanna', '270BC', CAST('1977-05-01' AS Date), 'Italia', 'Lazio', '64791', '39 320 3231251', NULL, 'Giovanna.270BCtiscali.com');
