@@ -1,59 +1,38 @@
-﻿create schema Banca;
+create schema Banca;
 use Banca;
 create table Clienti (
-	CodiceFiscale varchar(16) not null PRIMARY KEY,
+	CodiceFiscale varchar(16) not null,
     Nome varchar(50) not null,
     Cognome varchar(50) not null,
     Eta int not null,
     Residenza varchar(50) not null,
     Impiego varchar(50) not null);
     
-alter table Clienti add constraint CheckEta check (eta > 18);
-alter table Clienti add constraint CheckCodiceFiscale check  (length(CodiceFiscale) = 16);
-    
-create table ContoCorrente (
-	Conto varchar(16) not null PRIMARY KEY,
+
+create table ContiCorrente (
+	Conto varchar(16) not null,
     Saldo decimal(18,2) not null,
     Valuta varchar(3) not null,
     DataApertura datetime not null,
     DataChiusura datetime null
     );
     
-alter table ContoCorrente add constraint CheckDataCC check (DataChiusura > DataApertura or DataChiusura is null);
-       
     
 Create table ClientiContiCorrente (
 	CodiceFiscale varchar(16) not null,
-    Conto varchar(16) not null,
-    PRIMARY KEY (CodiceFiscale,Conto),
-    FOREIGN KEY (CodiceFiscale) REFERENCES Clienti(CodiceFiscale),
-    FOREIGN KEY (Conto) REFERENCES ContoCorrente(Conto)
+    Conto varchar(16) not null
     );
     
 Create table CarteCredito (
-	 Carta varchar(16) not null PRIMARY KEY,
+	 Carta varchar(16) not null,
      CodiceFiscale varchar(16) not null,
      Tipologia varchar(30) not null,
      Circuito varchar(30) not null,
      Saldo decimal(18,2) not null,
-     Valuta varchar(3) not null,
-     FOREIGN KEY (CodiceFiscale) REFERENCES Clienti(CodiceFiscale)
+     Valuta varchar(3) not null
      );
  
-alter table CarteCredito add constraint CheckCircuito check  (tipologia in ('Visa','Mastercard'));
-alter table CarteCredito add constraint CheckValuta check  (Valuta in ('EUR','USD','GBP'));
-        
- Create table Servizi (
-	NumeroServizio int not null auto_increment primary key,
-    Conto varchar(16) not null,
-    TipologiaServizio varchar(30) not null,
-    DataApertura datetime not null,
-    DataChiusura datetime null,
-    FOREIGN KEY (Conto) REFERENCES ContoCorrente(Conto)
-    );
-alter table Servizi add constraint CheckDataServizi check (DataChiusura > DataApertura or DataChiusura is null);
-    
-    
+
 INSERT Clienti (CodiceFiscale, Nome, Cognome, Eta, Residenza, Impiego) VALUES ('AWNNLZ36R05E168T', 'Giovanni', 'Verdi', '45', 'Puglia', 'Impiegato');
 INSERT Clienti (CodiceFiscale, Nome, Cognome, Eta, Residenza, Impiego) VALUES ('BHLVVP64C64F735E', 'Alice', 'Gianni', '34', 'Sicilia', 'Dirigente');
 INSERT Clienti (CodiceFiscale, Nome, Cognome, Eta, Residenza, Impiego) VALUES ('BHLVVR64R64F635E', 'Cristina', 'Gianni', '56', 'Lombardia', 'Preside');
@@ -94,46 +73,46 @@ INSERT Clienti (CodiceFiscale, Nome, Cognome, Eta, Residenza, Impiego) VALUES ('
 INSERT Clienti (CodiceFiscale, Nome, Cognome, Eta, Residenza, Impiego) VALUES ('VRNVVF88A50B646H', 'Maria', 'Marino', '40', 'Piemonte', 'Dirigente');
 INSERT Clienti (CodiceFiscale, Nome, Cognome, Eta, Residenza, Impiego) VALUES ('XJSRSX66B16A956L', 'Fabrizio', 'Fabrizi', '49', 'Piemonte', 'Impiegato');
 INSERT Clienti (CodiceFiscale, Nome, Cognome, Eta, Residenza, Impiego) VALUES ('XJSRSX66B16A956V', 'Maria', 'Fabrizi', '58', 'Toscana', 'Preside');
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('1', CAST(1000.12 AS Decimal(18, 2)), 'EUR', CAST('2018-10-10T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('10', CAST(4001.20 AS Decimal(18, 2)), 'EUR', CAST('2019-02-05T00:00:00.000' AS DateTime), CAST('2019-08-30T00:00:00.000' AS DateTime));
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('11', CAST(412.50 AS Decimal(18, 2)), 'USD', CAST('2018-08-08T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('12', CAST(55.10 AS Decimal(18, 2)), 'EUR', CAST('2019-12-04T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('13', CAST(5672.20 AS Decimal(18, 2)), 'EUR', CAST('2018-09-04T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('14', CAST(234.50 AS Decimal(18, 2)), 'EUR', CAST('2019-10-01T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('15', CAST(12.40 AS Decimal(18, 2)), 'EUR', CAST('2018-02-05T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('16', CAST(342.10 AS Decimal(18, 2)), 'EUR', CAST('2019-06-04T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('17', CAST(1.40 AS Decimal(18, 2)), 'USD', CAST('2020-01-02T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('18', CAST(643.23 AS Decimal(18, 2)), 'EUR', CAST('2019-02-05T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('19', CAST(642.60 AS Decimal(18, 2)), 'EUR', CAST('2017-07-07T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('2', CAST(1020.15 AS Decimal(18, 2)), 'EUR', CAST('2019-02-05T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('20', CAST(123.40 AS Decimal(18, 2)), 'EUR', CAST('2019-12-04T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('21', CAST(45.20 AS Decimal(18, 2)), 'USD', CAST('2019-12-03T00:00:00.000' AS DateTime), CAST('2020-12-03T00:00:00.000' AS DateTime));
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('22', CAST(1000.12 AS Decimal(18, 2)), 'EUR', CAST('2019-10-01T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('23', CAST(1020.15 AS Decimal(18, 2)), 'EUR', CAST('2017-02-06T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('24', CAST(2014.65 AS Decimal(18, 2)), 'EUR', CAST('2019-06-04T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('25', CAST(234.32 AS Decimal(18, 2)), 'EUR', CAST('2017-10-10T00:00:00.000' AS DateTime), CAST('2018-05-10T00:00:00.000' AS DateTime));
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('26', CAST(512.31 AS Decimal(18, 2)), 'EUR', CAST('2019-02-06T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('27', CAST(311.23 AS Decimal(18, 2)), 'EUR', CAST('2017-07-07T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('28', CAST(341.32 AS Decimal(18, 2)), 'EUR', CAST('2019-12-04T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('29', CAST(11.24 AS Decimal(18, 2)), 'EUR', CAST('2017-09-04T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('3', CAST(2014.65 AS Decimal(18, 2)), 'EUR', CAST('2018-08-08T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('30', CAST(992.21 AS Decimal(18, 2)), 'EUR', CAST('2017-10-10T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('31', CAST(4001.20 AS Decimal(18, 2)), 'EUR', CAST('2019-02-06T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('32', CAST(412.50 AS Decimal(18, 2)), 'EUR', CAST('2017-07-07T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('33', CAST(55.10 AS Decimal(18, 2)), 'EUR', CAST('2019-12-04T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('34', CAST(5672.20 AS Decimal(18, 2)), 'EUR', CAST('2017-09-04T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('35', CAST(234.50 AS Decimal(18, 2)), 'EUR', CAST('2019-10-01T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('36', CAST(12.40 AS Decimal(18, 2)), 'EUR', CAST('2017-02-06T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('37', CAST(342.10 AS Decimal(18, 2)), 'EUR', CAST('2019-06-04T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('38', CAST(1.40 AS Decimal(18, 2)), 'EUR', CAST('2017-10-10T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('39', CAST(643.23 AS Decimal(18, 2)), 'EUR', CAST('2019-02-06T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('4', CAST(234.32 AS Decimal(18, 2)), 'EUR', CAST('2019-12-04T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('40', CAST(642.60 AS Decimal(18, 2)), 'EUR', CAST('2017-07-07T00:00:00.000' AS DateTime), CAST('2019-12-14T00:00:00.000' AS DateTime));
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('5', CAST(512.31 AS Decimal(18, 2)), 'EUR', CAST('2018-09-04T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('6', CAST(311.23 AS Decimal(18, 2)), 'EUR', CAST('2019-10-01T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('7', CAST(341.32 AS Decimal(18, 2)), 'EUR', CAST('2018-02-05T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('8', CAST(11.24 AS Decimal(18, 2)), 'EUR', CAST('2019-06-04T00:00:00.000' AS DateTime), NULL);
-INSERT ContoCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('9', CAST(992.21 AS Decimal(18, 2)), 'EUR', CAST('2018-10-10T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('1', CAST(1000.12 AS Decimal(18, 2)), 'EUR', CAST('2018-10-10T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('10', CAST(4001.20 AS Decimal(18, 2)), 'EUR', CAST('2019-02-05T00:00:00.000' AS DateTime), CAST('2019-08-30T00:00:00.000' AS DateTime));
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('11', CAST(412.50 AS Decimal(18, 2)), 'USD', CAST('2018-08-08T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('12', CAST(55.10 AS Decimal(18, 2)), 'EUR', CAST('2019-12-04T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('13', CAST(5672.20 AS Decimal(18, 2)), 'EUR', CAST('2018-09-04T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('14', CAST(234.50 AS Decimal(18, 2)), 'EUR', CAST('2019-10-01T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('15', CAST(12.40 AS Decimal(18, 2)), 'EUR', CAST('2018-02-05T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('16', CAST(342.10 AS Decimal(18, 2)), 'EUR', CAST('2019-06-04T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('17', CAST(1.40 AS Decimal(18, 2)), 'USD', CAST('2020-01-02T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('18', CAST(643.23 AS Decimal(18, 2)), 'EUR', CAST('2019-02-05T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('19', CAST(642.60 AS Decimal(18, 2)), 'EUR', CAST('2017-07-07T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('2', CAST(1020.15 AS Decimal(18, 2)), 'EUR', CAST('2019-02-05T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('20', CAST(123.40 AS Decimal(18, 2)), 'EUR', CAST('2019-12-04T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('21', CAST(45.20 AS Decimal(18, 2)), 'USD', CAST('2019-12-03T00:00:00.000' AS DateTime), CAST('2020-12-03T00:00:00.000' AS DateTime));
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('22', CAST(1000.12 AS Decimal(18, 2)), 'EUR', CAST('2019-10-01T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('23', CAST(1020.15 AS Decimal(18, 2)), 'EUR', CAST('2017-02-06T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('24', CAST(2014.65 AS Decimal(18, 2)), 'EUR', CAST('2019-06-04T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('25', CAST(234.32 AS Decimal(18, 2)), 'EUR', CAST('2017-10-10T00:00:00.000' AS DateTime), CAST('2018-05-10T00:00:00.000' AS DateTime));
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('26', CAST(512.31 AS Decimal(18, 2)), 'EUR', CAST('2019-02-06T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('27', CAST(311.23 AS Decimal(18, 2)), 'EUR', CAST('2017-07-07T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('28', CAST(341.32 AS Decimal(18, 2)), 'EUR', CAST('2019-12-04T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('29', CAST(11.24 AS Decimal(18, 2)), 'EUR', CAST('2017-09-04T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('3', CAST(2014.65 AS Decimal(18, 2)), 'EUR', CAST('2018-08-08T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('30', CAST(992.21 AS Decimal(18, 2)), 'EUR', CAST('2017-10-10T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('31', CAST(4001.20 AS Decimal(18, 2)), 'EUR', CAST('2019-02-06T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('32', CAST(412.50 AS Decimal(18, 2)), 'EUR', CAST('2017-07-07T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('33', CAST(55.10 AS Decimal(18, 2)), 'EUR', CAST('2019-12-04T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('34', CAST(5672.20 AS Decimal(18, 2)), 'EUR', CAST('2017-09-04T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('35', CAST(234.50 AS Decimal(18, 2)), 'EUR', CAST('2019-10-01T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('36', CAST(12.40 AS Decimal(18, 2)), 'EUR', CAST('2017-02-06T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('37', CAST(342.10 AS Decimal(18, 2)), 'EUR', CAST('2019-06-04T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('38', CAST(1.40 AS Decimal(18, 2)), 'EUR', CAST('2017-10-10T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('39', CAST(643.23 AS Decimal(18, 2)), 'EUR', CAST('2019-02-06T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('4', CAST(234.32 AS Decimal(18, 2)), 'EUR', CAST('2019-12-04T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('40', CAST(642.60 AS Decimal(18, 2)), 'EUR', CAST('2017-07-07T00:00:00.000' AS DateTime), CAST('2019-12-14T00:00:00.000' AS DateTime));
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('5', CAST(512.31 AS Decimal(18, 2)), 'EUR', CAST('2018-09-04T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('6', CAST(311.23 AS Decimal(18, 2)), 'EUR', CAST('2019-10-01T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('7', CAST(341.32 AS Decimal(18, 2)), 'EUR', CAST('2018-02-05T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('8', CAST(11.24 AS Decimal(18, 2)), 'EUR', CAST('2019-06-04T00:00:00.000' AS DateTime), NULL);
+INSERT ContiCorrente (Conto, Saldo, Valuta, DataApertura, DataChiusura) VALUES ('9', CAST(992.21 AS Decimal(18, 2)), 'EUR', CAST('2018-10-10T00:00:00.000' AS DateTime), NULL);
 INSERT ClientiContiCorrente (CodiceFiscale, Conto) VALUES ('AWNNLZ36R05E168T', '32');
 INSERT ClientiContiCorrente (CodiceFiscale, Conto) VALUES ('BHLVVP64C64F735E', '6');
 INSERT ClientiContiCorrente (CodiceFiscale, Conto) VALUES ('BHLVVR64R64F635E', '26');
@@ -197,33 +176,3 @@ INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) V
 INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('7', 'MXXHPR88A02D895O', 'Visa', 'Maestro', CAST(26.12 AS Decimal(18, 2)), 'EUR');
 INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('8', 'PVPKTO80T64G614O', 'Mastercard', 'Maestro', CAST(24.12 AS Decimal(18, 2)), 'EUR');
 INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('9', 'TYRSGP84A43B866O', 'Visa', 'Maestro', CAST(98.12 AS Decimal(18, 2)), 'EUR');
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES ( 2, 'Pagamento utenze', CAST('2019-02-07T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES ( 3, 'Telepass', CAST('2018-08-10T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES ( 4, 'Ricarica cellulare', CAST('2019-12-13T00:00:00.000' AS DateTime), CAST('2020-01-13T00:00:00.000' AS DateTime));
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES ( 1, 'Ricarica cellulare', CAST('2018-11-10T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES ( 6, 'Pagamento utenze', CAST('2019-11-01T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES ( 7, 'Telepass', CAST('2018-03-05T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES ( 8, 'Ricarica cellulare', CAST('2019-07-03T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (9, 'Pagamento utenze', CAST('2018-11-10T00:00:00.000' AS DateTime), CAST('2019-04-10T00:00:00.000' AS DateTime));
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (9, 'Ricarica cellulare', CAST('2018-11-10T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (9, 'Telepass', CAST('2019-01-10T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (12, 'Ricarica cellulare', CAST('2019-12-12T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (13, 'Ricarica cellulare', CAST('2018-10-04T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (14, 'Pagamento utenze', CAST('2019-11-01T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (15, 'Pagamento F24', CAST('2018-03-05T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (15, 'Telepass', CAST('2018-04-05T00:00:00.000' AS DateTime), CAST('2019-03-15T00:00:00.000' AS DateTime));
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (17, 'Pagamento utenze', CAST('2020-02-02T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (18, 'Pagamento F24', CAST('2019-03-12T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (19, 'Pagamento F24', CAST('2017-08-07T00:00:00.000' AS DateTime), CAST('2019-01-07T00:00:00.000' AS DateTime));
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (20, 'Pagamento F24', CAST('2019-12-14T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (32, 'Ricarica cellulare', CAST('2017-08-07T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (33, 'Pagamento utenze', CAST('2019-12-21T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (33, 'Ricarica cellulare', CAST('2019-12-21T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (24, 'Telepass', CAST('2019-07-04T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (25, 'Ricarica cellulare', CAST('2017-11-10T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (26, 'Ricarica cellulare', CAST('2019-03-06T00:00:00.000' AS DateTime), CAST('2019-06-10T00:00:00.000' AS DateTime));
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (27, 'Pagamento utenze', CAST('2017-08-07T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (27, 'Telepass', CAST('2017-08-07T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (29, 'Ricarica cellulare', CAST('2017-10-04T00:00:00.000' AS DateTime), NULL);
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (30, 'Pagamento utenze', CAST('2017-11-10T00:00:00.000' AS DateTime), CAST('2018-12-11T00:00:00.000' AS DateTime));
-INSERT Servizi ( Conto, TipologiaServizio, DataApertura, DataChiusura) VALUES (31, 'Ricarica cellulare', CAST('2019-02-11T00:00:00.000' AS DateTime), NULL);
