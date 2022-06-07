@@ -1,6 +1,6 @@
-CREATE DATABASE [BANCA]
+CREATE DATABASE Banca
 go
-USE [BANCA]
+USE Banca
 GO
 
 CREATE TABLE [dbo].[CarteCredito](
@@ -9,11 +9,7 @@ CREATE TABLE [dbo].[CarteCredito](
 	[Tipologia] [varchar](30) NOT NULL,
 	[Circuito] [varchar](30) NOT NULL,
 	[Saldo] [decimal](18, 2) NOT NULL,
-	[Valuta] [varchar](3) NOT NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[Carta] ASC
-)
+	[Valuta] [varchar](3) NOT NULL
 )
 GO
 CREATE TABLE [dbo].[Clienti](
@@ -22,42 +18,18 @@ CREATE TABLE [dbo].[Clienti](
 	[Cognome] [varchar](50) NOT NULL,
 	[Eta] [varchar](50) NULL,
 	[Residenza] [varchar](50) NOT NULL,
-	[Impiego] [varchar](50) NOT NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[CodiceFiscale] ASC
-)) 
+	[Impiego] [varchar](50) NOT NULL) 
 GO
 CREATE TABLE [dbo].[ClientiContiCorrente](
 	[CodiceFiscale] [varchar](16) NOT NULL,
-	[Conto] [varchar](16) NOT NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[CodiceFiscale] ASC,
-	[Conto] ASC
-))
+	[Conto] [varchar](16) NOT NULL)
 GO
-CREATE TABLE [dbo].[ContoCorrente](
+CREATE TABLE [dbo].[ContiCorrente](
 	[Conto] [varchar](16) NOT NULL,
 	[Saldo] [decimal](18, 2) NOT NULL,
 	[Valuta] [varchar](3) NOT NULL,
 	[DataApertura] [datetime] NOT NULL,
-	[DataChiusura] [datetime] NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[Conto] ASC
-)) 
-GO
-CREATE TABLE [dbo].[Servizi](
-	[NumeroServizio] [int] NOT NULL,
-	[Conto] [varchar](16) NOT NULL,
-	[TipologiaServizio] [varchar](30) NOT NULL,
-	[DataApertura] [datetime] NOT NULL,
-	[DataChiusura] [datetime] NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[NumeroServizio] ASC
-)) 
+	[DataChiusura] [datetime] NULL) 
 GO
 INSERT [dbo].[CarteCredito] ([Carta], [CodiceFiscale], [Tipologia], [Circuito], [Saldo], [Valuta]) VALUES (N'1', N'SRDLZQ40M58A184Y', N'Credito', N'Visa', CAST(12.13 AS Decimal(18, 2)), N'EUR')
 INSERT [dbo].[CarteCredito] ([Carta], [CodiceFiscale], [Tipologia], [Circuito], [Saldo], [Valuta]) VALUES (N'10', N'CDPKXR28E62A973B', N'Prepagata', N'Visa', CAST(41.20 AS Decimal(18, 2)), N'EUR')
@@ -165,106 +137,43 @@ INSERT [dbo].[ClientiContiCorrente] ([CodiceFiscale], [Conto]) VALUES (N'VRNVVF8
 INSERT [dbo].[ClientiContiCorrente] ([CodiceFiscale], [Conto]) VALUES (N'VRNVVF88A50B646H', N'24')
 INSERT [dbo].[ClientiContiCorrente] ([CodiceFiscale], [Conto]) VALUES (N'VRNVVF88A50B646H', N'34')
 INSERT [dbo].[ClientiContiCorrente] ([CodiceFiscale], [Conto]) VALUES (N'XJSRSX66B16A956L', N'20')
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'1', CAST(1000.12 AS Decimal(18, 2)), N'EUR', CAST(N'2018-10-10T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'10', CAST(4001.20 AS Decimal(18, 2)), N'EUR', CAST(N'2019-02-05T00:00:00.000' AS DateTime), CAST(N'2019-08-30T00:00:00.000' AS DateTime))
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'11', CAST(412.50 AS Decimal(18, 2)), N'USD', CAST(N'2018-08-08T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'12', CAST(55.10 AS Decimal(18, 2)), N'EUR', CAST(N'2019-12-04T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'13', CAST(5672.20 AS Decimal(18, 2)), N'EUR', CAST(N'2018-09-04T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'14', CAST(234.50 AS Decimal(18, 2)), N'EUR', CAST(N'2019-10-01T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'15', CAST(12.40 AS Decimal(18, 2)), N'EUR', CAST(N'2018-02-05T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'16', CAST(342.10 AS Decimal(18, 2)), N'EUR', CAST(N'2019-06-04T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'17', CAST(1.40 AS Decimal(18, 2)), N'USD', CAST(N'2020-01-02T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'18', CAST(643.23 AS Decimal(18, 2)), N'EUR', CAST(N'2019-02-05T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'19', CAST(642.60 AS Decimal(18, 2)), N'EUR', CAST(N'2017-07-07T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'2', CAST(1020.15 AS Decimal(18, 2)), N'EUR', CAST(N'2019-02-05T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'20', CAST(123.40 AS Decimal(18, 2)), N'EUR', CAST(N'2019-12-04T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'21', CAST(45.20 AS Decimal(18, 2)), N'USD', CAST(N'2019-12-03T00:00:00.000' AS DateTime), CAST(N'2020-12-03T00:00:00.000' AS DateTime))
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'22', CAST(1000.12 AS Decimal(18, 2)), N'EUR', CAST(N'2019-10-01T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'23', CAST(1020.15 AS Decimal(18, 2)), N'EUR', CAST(N'2017-02-06T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'24', CAST(2014.65 AS Decimal(18, 2)), N'EUR', CAST(N'2019-06-04T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'25', CAST(234.32 AS Decimal(18, 2)), N'EUR', CAST(N'2017-10-10T00:00:00.000' AS DateTime), CAST(N'2018-05-10T00:00:00.000' AS DateTime))
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'26', CAST(512.31 AS Decimal(18, 2)), N'EUR', CAST(N'2019-02-06T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'27', CAST(311.23 AS Decimal(18, 2)), N'EUR', CAST(N'2017-07-07T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'28', CAST(341.32 AS Decimal(18, 2)), N'EUR', CAST(N'2019-12-04T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'29', CAST(11.24 AS Decimal(18, 2)), N'EUR', CAST(N'2017-09-04T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'3', CAST(2014.65 AS Decimal(18, 2)), N'EUR', CAST(N'2018-08-08T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'30', CAST(992.21 AS Decimal(18, 2)), N'EUR', CAST(N'2017-10-10T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'31', CAST(4001.20 AS Decimal(18, 2)), N'EUR', CAST(N'2019-02-06T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'32', CAST(412.50 AS Decimal(18, 2)), N'EUR', CAST(N'2017-07-07T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'33', CAST(55.10 AS Decimal(18, 2)), N'EUR', CAST(N'2019-12-04T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'34', CAST(5672.20 AS Decimal(18, 2)), N'EUR', CAST(N'2017-09-04T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'35', CAST(234.50 AS Decimal(18, 2)), N'EUR', CAST(N'2019-10-01T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'36', CAST(12.40 AS Decimal(18, 2)), N'EUR', CAST(N'2017-02-06T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'37', CAST(342.10 AS Decimal(18, 2)), N'EUR', CAST(N'2019-06-04T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'38', CAST(1.40 AS Decimal(18, 2)), N'EUR', CAST(N'2017-10-10T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'39', CAST(643.23 AS Decimal(18, 2)), N'EUR', CAST(N'2019-02-06T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'4', CAST(234.32 AS Decimal(18, 2)), N'EUR', CAST(N'2019-12-04T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'40', CAST(642.60 AS Decimal(18, 2)), N'EUR', CAST(N'2017-07-07T00:00:00.000' AS DateTime), CAST(N'2019-12-14T00:00:00.000' AS DateTime))
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'5', CAST(512.31 AS Decimal(18, 2)), N'EUR', CAST(N'2018-09-04T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'6', CAST(311.23 AS Decimal(18, 2)), N'EUR', CAST(N'2019-10-01T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'7', CAST(341.32 AS Decimal(18, 2)), N'EUR', CAST(N'2018-02-05T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'8', CAST(11.24 AS Decimal(18, 2)), N'EUR', CAST(N'2019-06-04T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[ContoCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'9', CAST(992.21 AS Decimal(18, 2)), N'EUR', CAST(N'2018-10-10T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (1, N'1', N'Telepass', CAST(N'2018-11-10T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (2, N'2', N'Pagamento utenze', CAST(N'2019-02-07T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (3, N'3', N'Telepass', CAST(N'2018-08-10T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (4, N'4', N'Ricarica cellulare', CAST(N'2019-12-13T00:00:00.000' AS DateTime), CAST(N'2020-01-13T00:00:00.000' AS DateTime))
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (5, N'1', N'Ricarica cellulare', CAST(N'2018-11-10T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (6, N'6', N'Pagamento utenze', CAST(N'2019-11-01T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (7, N'7', N'Telepass', CAST(N'2018-03-05T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (8, N'8', N'Ricarica cellulare', CAST(N'2019-07-03T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (9, N'9', N'Pagamento utenze', CAST(N'2018-11-10T00:00:00.000' AS DateTime), CAST(N'2019-04-10T00:00:00.000' AS DateTime))
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (10, N'9', N'Ricarica cellulare', CAST(N'2018-11-10T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (11, N'9', N'Telepass', CAST(N'2019-01-10T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (12, N'12', N'Ricarica cellulare', CAST(N'2019-12-12T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (13, N'13', N'Ricarica cellulare', CAST(N'2018-10-04T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (14, N'14', N'Pagamento utenze', CAST(N'2019-11-01T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (15, N'15', N'Pagamento F24', CAST(N'2018-03-05T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (16, N'15', N'Telepass', CAST(N'2018-04-05T00:00:00.000' AS DateTime), CAST(N'2019-03-15T00:00:00.000' AS DateTime))
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (17, N'17', N'Pagamento utenze', CAST(N'2020-02-02T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (18, N'18', N'Pagamento F24', CAST(N'2019-03-12T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (19, N'19', N'Pagamento F24', CAST(N'2017-08-07T00:00:00.000' AS DateTime), CAST(N'2019-01-07T00:00:00.000' AS DateTime))
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (20, N'20', N'Pagamento F24', CAST(N'2019-12-14T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (21, N'32', N'Ricarica cellulare', CAST(N'2017-08-07T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (22, N'33', N'Pagamento utenze', CAST(N'2019-12-21T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (23, N'33', N'Ricarica cellulare', CAST(N'2019-12-21T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (24, N'24', N'Telepass', CAST(N'2019-07-04T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (25, N'25', N'Ricarica cellulare', CAST(N'2017-11-10T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (26, N'26', N'Ricarica cellulare', CAST(N'2019-03-06T00:00:00.000' AS DateTime), CAST(N'2019-06-10T00:00:00.000' AS DateTime))
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (27, N'27', N'Pagamento utenze', CAST(N'2017-08-07T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (28, N'27', N'Telepass', CAST(N'2017-08-07T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (29, N'29', N'Ricarica cellulare', CAST(N'2017-10-04T00:00:00.000' AS DateTime), NULL)
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (30, N'30', N'Pagamento utenze', CAST(N'2017-11-10T00:00:00.000' AS DateTime), CAST(N'2018-12-11T00:00:00.000' AS DateTime))
-INSERT [dbo].[Servizi] ([NumeroServizio], [Conto], [TipologiaServizio], [DataApertura], [DataChiusura]) VALUES (31, N'31', N'Ricarica cellulare', CAST(N'2019-02-11T00:00:00.000' AS DateTime), NULL)
-ALTER TABLE [dbo].[CarteCredito]  WITH NOCHECK ADD FOREIGN KEY([CodiceFiscale])
-REFERENCES [dbo].[Clienti] ([CodiceFiscale])
-GO
-ALTER TABLE [dbo].[ClientiContiCorrente]  WITH NOCHECK ADD FOREIGN KEY([CodiceFiscale])
-REFERENCES [dbo].[Clienti] ([CodiceFiscale])
-GO
-ALTER TABLE [dbo].[ClientiContiCorrente]  WITH NOCHECK ADD FOREIGN KEY([Conto])
-REFERENCES [dbo].[ContoCorrente] ([Conto])
-GO
-ALTER TABLE [dbo].[Servizi]  WITH NOCHECK ADD FOREIGN KEY([Conto])
-REFERENCES [dbo].[ContoCorrente] ([Conto])
-GO
-ALTER TABLE [dbo].[CarteCredito]  WITH NOCHECK ADD  CONSTRAINT [CheckCircuito] CHECK  (([tipologia]='Mastercard' OR [tipologia]='Visa'))
-GO
-ALTER TABLE [dbo].[CarteCredito] CHECK CONSTRAINT [CheckCircuito]
-GO
-ALTER TABLE [dbo].[CarteCredito]  WITH NOCHECK ADD  CONSTRAINT [CheckValuta] CHECK  (([Valuta]='GBP' OR [Valuta]='USD' OR [Valuta]='EUR'))
-GO
-ALTER TABLE [dbo].[CarteCredito] CHECK CONSTRAINT [CheckValuta]
-GO
-ALTER TABLE [dbo].[Clienti]  WITH NOCHECK ADD  CONSTRAINT [CheckCodiceFiscale] CHECK  ((len([CodiceFiscale])=(16)))
-GO
-ALTER TABLE [dbo].[Clienti] CHECK CONSTRAINT [CheckCodiceFiscale]
-GO
-ALTER TABLE [dbo].[ContoCorrente]  WITH NOCHECK ADD  CONSTRAINT [CheckDataCC] CHECK  (([DataChiusura]>[DataApertura] OR [DataChiusura] IS NULL))
-GO
-ALTER TABLE [dbo].[ContoCorrente] CHECK CONSTRAINT [CheckDataCC]
-GO
-ALTER TABLE [dbo].[Servizi]  WITH NOCHECK ADD  CONSTRAINT [CheckDataServizi] CHECK  (([DataChiusura]>[DataApertura] OR [DataChiusura] IS NULL))
-GO
-ALTER TABLE [dbo].[Servizi] CHECK CONSTRAINT [CheckDataServizi]
-GO
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'1', CAST(1000.12 AS Decimal(18, 2)), N'EUR', CAST(N'2018-10-10T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'10', CAST(4001.20 AS Decimal(18, 2)), N'EUR', CAST(N'2019-02-05T00:00:00.000' AS DateTime), CAST(N'2019-08-30T00:00:00.000' AS DateTime))
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'11', CAST(412.50 AS Decimal(18, 2)), N'USD', CAST(N'2018-08-08T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'12', CAST(55.10 AS Decimal(18, 2)), N'EUR', CAST(N'2019-12-04T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'13', CAST(5672.20 AS Decimal(18, 2)), N'EUR', CAST(N'2018-09-04T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'14', CAST(234.50 AS Decimal(18, 2)), N'EUR', CAST(N'2019-10-01T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'15', CAST(12.40 AS Decimal(18, 2)), N'EUR', CAST(N'2018-02-05T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'16', CAST(342.10 AS Decimal(18, 2)), N'EUR', CAST(N'2019-06-04T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'17', CAST(1.40 AS Decimal(18, 2)), N'USD', CAST(N'2020-01-02T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'18', CAST(643.23 AS Decimal(18, 2)), N'EUR', CAST(N'2019-02-05T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'19', CAST(642.60 AS Decimal(18, 2)), N'EUR', CAST(N'2017-07-07T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'2', CAST(1020.15 AS Decimal(18, 2)), N'EUR', CAST(N'2019-02-05T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'20', CAST(123.40 AS Decimal(18, 2)), N'EUR', CAST(N'2019-12-04T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'21', CAST(45.20 AS Decimal(18, 2)), N'USD', CAST(N'2019-12-03T00:00:00.000' AS DateTime), CAST(N'2020-12-03T00:00:00.000' AS DateTime))
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'22', CAST(1000.12 AS Decimal(18, 2)), N'EUR', CAST(N'2019-10-01T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'23', CAST(1020.15 AS Decimal(18, 2)), N'EUR', CAST(N'2017-02-06T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'24', CAST(2014.65 AS Decimal(18, 2)), N'EUR', CAST(N'2019-06-04T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'25', CAST(234.32 AS Decimal(18, 2)), N'EUR', CAST(N'2017-10-10T00:00:00.000' AS DateTime), CAST(N'2018-05-10T00:00:00.000' AS DateTime))
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'26', CAST(512.31 AS Decimal(18, 2)), N'EUR', CAST(N'2019-02-06T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'27', CAST(311.23 AS Decimal(18, 2)), N'EUR', CAST(N'2017-07-07T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'28', CAST(341.32 AS Decimal(18, 2)), N'EUR', CAST(N'2019-12-04T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'29', CAST(11.24 AS Decimal(18, 2)), N'EUR', CAST(N'2017-09-04T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'3', CAST(2014.65 AS Decimal(18, 2)), N'EUR', CAST(N'2018-08-08T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'30', CAST(992.21 AS Decimal(18, 2)), N'EUR', CAST(N'2017-10-10T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'31', CAST(4001.20 AS Decimal(18, 2)), N'EUR', CAST(N'2019-02-06T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'32', CAST(412.50 AS Decimal(18, 2)), N'EUR', CAST(N'2017-07-07T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'33', CAST(55.10 AS Decimal(18, 2)), N'EUR', CAST(N'2019-12-04T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'34', CAST(5672.20 AS Decimal(18, 2)), N'EUR', CAST(N'2017-09-04T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'35', CAST(234.50 AS Decimal(18, 2)), N'EUR', CAST(N'2019-10-01T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'36', CAST(12.40 AS Decimal(18, 2)), N'EUR', CAST(N'2017-02-06T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'37', CAST(342.10 AS Decimal(18, 2)), N'EUR', CAST(N'2019-06-04T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'38', CAST(1.40 AS Decimal(18, 2)), N'EUR', CAST(N'2017-10-10T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'39', CAST(643.23 AS Decimal(18, 2)), N'EUR', CAST(N'2019-02-06T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'4', CAST(234.32 AS Decimal(18, 2)), N'EUR', CAST(N'2019-12-04T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'40', CAST(642.60 AS Decimal(18, 2)), N'EUR', CAST(N'2017-07-07T00:00:00.000' AS DateTime), CAST(N'2019-12-14T00:00:00.000' AS DateTime))
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'5', CAST(512.31 AS Decimal(18, 2)), N'EUR', CAST(N'2018-09-04T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'6', CAST(311.23 AS Decimal(18, 2)), N'EUR', CAST(N'2019-10-01T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'7', CAST(341.32 AS Decimal(18, 2)), N'EUR', CAST(N'2018-02-05T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'8', CAST(11.24 AS Decimal(18, 2)), N'EUR', CAST(N'2019-06-04T00:00:00.000' AS DateTime), NULL)
+INSERT [dbo].[ContiCorrente] ([Conto], [Saldo], [Valuta], [DataApertura], [DataChiusura]) VALUES (N'9', CAST(992.21 AS Decimal(18, 2)), N'EUR', CAST(N'2018-10-10T00:00:00.000' AS DateTime), NULL)
