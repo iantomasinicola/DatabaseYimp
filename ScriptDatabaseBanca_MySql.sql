@@ -10,25 +10,25 @@ create table Clienti (
     
 
 create table ContiCorrente (
-	NumeroConto varchar(16) not null,
-    Saldo decimal(18,2) not null,
+	NumeroConto int not null,
+    Saldo decimal(18,4) not null,
     Valuta varchar(3) not null,
-    DataApertura datetime not null,
-    DataChiusura datetime null
+    DataApertura date not null,
+    DataChiusura date null
     );
     
     
 Create table ClientiContiCorrente (
 	CodiceFiscale varchar(16) not null,
-    NumeroConto varchar(16) not null
+    NumeroConto int not null
     );
     
 Create table CarteCredito (
-	 NumeroCarta varchar(16) not null,
+	 NumeroCarta int not null,
      CodiceFiscale varchar(16) not null,
      Tipologia varchar(30) not null,
      Circuito varchar(30) not null,
-     Saldo decimal(18,2) not null,
+     Saldo decimal(18,4) not null,
      Valuta varchar(3) not null
      );
  
