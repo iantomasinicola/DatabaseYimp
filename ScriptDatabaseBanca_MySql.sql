@@ -1,4 +1,4 @@
-create schema Banca;
+create database Banca;
 use Banca;
 create table Clienti (
 	CodiceFiscale varchar(16) not null,
@@ -24,7 +24,7 @@ Create table ClientiContiCorrente (
     );
     
 Create table CarteCredito (
-	 Carta varchar(16) not null,
+	 NumeroCarta varchar(16) not null,
      CodiceFiscale varchar(16) not null,
      Tipologia varchar(30) not null,
      Circuito varchar(30) not null,
@@ -158,21 +158,21 @@ INSERT ClientiContiCorrente (CodiceFiscale, NumeroConto) VALUES ('VRNVVF88A50B64
 INSERT ClientiContiCorrente (CodiceFiscale, NumeroConto) VALUES ('VRNVVF88A50B646H', '24');
 INSERT ClientiContiCorrente (CodiceFiscale, NumeroConto) VALUES ('VRNVVF88A50B646H', '34');
 INSERT ClientiContiCorrente (CodiceFiscale, NumeroConto) VALUES ('XJSRSX66B16A956L', '20');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('1', 'SRDLZQ40M58A184Y', 'Visa', 'Maestro', CAST(12.13 AS Decimal(18, 2)), 'EUR');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('10', 'CDPKXR28E62A973B', 'Visa', 'Maestro', CAST(41.20 AS Decimal(18, 2)), 'EUR');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('11', 'RQMNHF29T53I482R', 'Visa', 'Maestro', CAST(12.13 AS Decimal(18, 2)), 'USD');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('12', 'VRNVVF88A50B646H', 'Mastercard', 'Maestro', CAST(26.12 AS Decimal(18, 2)), 'EUR');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('13', 'TRRNZN61A46F853F', 'Visa', 'Maestro', CAST(12.13 AS Decimal(18, 2)), 'EUR');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('14', 'BHLVVR64R64F635E', 'Mastercard', 'Maestro', CAST(53.10 AS Decimal(18, 2)), 'EUR');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('15', 'MXXHRR88A02A895O', 'Visa', 'Maestro', CAST(12.13 AS Decimal(18, 2)), 'EUR');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('16', 'RVRKTO80T64G614O', 'Mastercard', 'Maestro', CAST(12.99 AS Decimal(18, 2)), 'EUR');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('17', 'TYRSGR84A43B866O', 'Mastercard', 'Maestro', CAST(24.12 AS Decimal(18, 2)), 'EUR');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('18', 'RARKXR28E62A963B', 'Visa', 'Maestro', CAST(23.53 AS Decimal(18, 2)), 'EUR');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('2', 'JHLTTS66P17H911Y', 'Visa', 'Maestro', CAST(26.12 AS Decimal(18, 2)), 'EUR');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('3', 'RQMNHF29T53I482T', 'Mastercard', 'Maestro', CAST(24.12 AS Decimal(18, 2)), 'EUR');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('4', 'VCNVVF88A50B646H', 'Visa', 'Maestro', CAST(98.12 AS Decimal(18, 2)), 'EUR');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('5', 'TPPNZN61D47F853F', 'Mastercard', 'Maestro', CAST(72.10 AS Decimal(18, 2)), 'USD');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('6', 'BHLVVP64C64F735E', 'Visa', 'Maestro', CAST(12.13 AS Decimal(18, 2)), 'EUR');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('7', 'MXXHPR88A02D895O', 'Visa', 'Maestro', CAST(26.12 AS Decimal(18, 2)), 'EUR');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('8', 'PVPKTO80T64G614O', 'Mastercard', 'Maestro', CAST(24.12 AS Decimal(18, 2)), 'EUR');
-INSERT CarteCredito (Carta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('9', 'TYRSGP84A43B866O', 'Visa', 'Maestro', CAST(98.12 AS Decimal(18, 2)), 'EUR');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('1', 'SRDLZQ40M58A184Y', 'Visa', 'Maestro', CAST(12.13 AS Decimal(18, 2)), 'EUR');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('10', 'CDPKXR28E62A973B', 'Visa', 'Maestro', CAST(41.20 AS Decimal(18, 2)), 'EUR');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('11', 'RQMNHF29T53I482R', 'Visa', 'Maestro', CAST(12.13 AS Decimal(18, 2)), 'USD');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('12', 'VRNVVF88A50B646H', 'Mastercard', 'Maestro', CAST(26.12 AS Decimal(18, 2)), 'EUR');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('13', 'TRRNZN61A46F853F', 'Visa', 'Maestro', CAST(12.13 AS Decimal(18, 2)), 'EUR');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('14', 'BHLVVR64R64F635E', 'Mastercard', 'Maestro', CAST(53.10 AS Decimal(18, 2)), 'EUR');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('15', 'MXXHRR88A02A895O', 'Visa', 'Maestro', CAST(12.13 AS Decimal(18, 2)), 'EUR');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('16', 'RVRKTO80T64G614O', 'Mastercard', 'Maestro', CAST(12.99 AS Decimal(18, 2)), 'EUR');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('17', 'TYRSGR84A43B866O', 'Mastercard', 'Maestro', CAST(24.12 AS Decimal(18, 2)), 'EUR');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('18', 'RARKXR28E62A963B', 'Visa', 'Maestro', CAST(23.53 AS Decimal(18, 2)), 'EUR');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('2', 'JHLTTS66P17H911Y', 'Visa', 'Maestro', CAST(26.12 AS Decimal(18, 2)), 'EUR');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('3', 'RQMNHF29T53I482T', 'Mastercard', 'Maestro', CAST(24.12 AS Decimal(18, 2)), 'EUR');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('4', 'VCNVVF88A50B646H', 'Visa', 'Maestro', CAST(98.12 AS Decimal(18, 2)), 'EUR');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('5', 'TPPNZN61D47F853F', 'Mastercard', 'Maestro', CAST(72.10 AS Decimal(18, 2)), 'USD');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('6', 'BHLVVP64C64F735E', 'Visa', 'Maestro', CAST(12.13 AS Decimal(18, 2)), 'EUR');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('7', 'MXXHPR88A02D895O', 'Visa', 'Maestro', CAST(26.12 AS Decimal(18, 2)), 'EUR');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('8', 'PVPKTO80T64G614O', 'Mastercard', 'Maestro', CAST(24.12 AS Decimal(18, 2)), 'EUR');
+INSERT CarteCredito (NumeroCarta, CodiceFiscale, Tipologia, Circuito, Saldo, Valuta) VALUES ('9', 'TYRSGP84A43B866O', 'Visa', 'Maestro', CAST(98.12 AS Decimal(18, 2)), 'EUR');
