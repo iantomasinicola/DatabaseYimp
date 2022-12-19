@@ -1,5 +1,6 @@
 # DatabaseYimp
 Il repository contiene degli script per creare dei database/schemi d'esempio su Sql Server, MySql e PostgreSQL in italiano. 
+Usateli ovviamente sempre e solo su una installazione personale e di test
 
 Su Sql Server creano un database, mentre su MySql e PostgreSQL creano uno schema.
 
