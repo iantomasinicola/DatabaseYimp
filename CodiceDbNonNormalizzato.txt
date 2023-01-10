@@ -1,0 +1,21 @@
+create database normalizzazione;
+
+use normalizzazione;
+
+CREATE TABLE DimPrestiti(NumeroPrestito int not null, NumeroCliente int not null, DataNascitaCliente date not null, DataAperturaPrestito date not null );
+
+ALTER TABLE DimPrestiti ADD primary key (NumeroPrestito, NumeroCliente);
+
+INSERT INTO DimPrestiti 
+	(NumeroPrestito, NumeroCliente, DataNascitaCliente, DataAperturaPrestito)
+VALUES 
+	(1,1,'19900101','20180101'),(1,2,'19900601','20180101'),(2,2,'19900101','20180601'),(3,3,'19800101','20180601');
+
+CREATE TABLE DimClienti (NumeroCliente int not null, Residenza varchar(50) not null);
+
+ALTER TABLE DimClienti add primary key(NumeroCliente);
+
+INSERT INTO DimClienti 
+	(NumeroCliente,Residenza) 
+VALUES
+	(1,'Piemonte - 23212'), (2,'Molise - 14212'), (3,'Piemonte - 31231'),(4,'Piemonte - 31222');
