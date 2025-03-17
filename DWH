@@ -1,0 +1,35 @@
+CREATE DATABASE Bronze_Layer
+
+USE Bronze_Layer
+
+CREATE TABLE Orders(
+	RowID VARCHAR(255),
+	OrderID VARCHAR(255),
+	OrderDate VARCHAR(255),
+	ShipDate VARCHAR(255),
+	ShipMode VARCHAR(255),
+	CustomerID VARCHAR(255),
+	CustomerName VARCHAR(255),
+	Segment VARCHAR(255),
+	Country VARCHAR(255),
+	City VARCHAR(255),
+	State VARCHAR(255),
+	PostalCode VARCHAR(255),
+	Region VARCHAR(255),
+	ProductID VARCHAR(255),
+	Category VARCHAR(255),
+	Sub_Category VARCHAR(255),
+	ProductName VARCHAR(255),
+	Sales VARCHAR(255),
+	Quantity VARCHAR(255),
+	Discount VARCHAR(255),
+	Profit VARCHAR(255) );
+
+
+CREATE TABLE Returns(
+Returned VARCHAR(255),
+OrderID VARCHAR(255));
+
+CREATE TABLE People(
+Person VARCHAR(255),
+Region VARCHAR(255));
