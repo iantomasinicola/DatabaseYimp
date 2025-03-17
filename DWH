@@ -42,6 +42,7 @@ ErroreCaricamento VARCHAR(255))
 
 CREATE OR ALTER PROCEDURE CaricaSampleSuperstore AS
 SET XACT_ABORT ON
+SET NOCOUNT ON
 BEGIN TRY
 	TRUNCATE TABLE Orders
 
@@ -54,7 +55,9 @@ BEGIN TRY
 	WITH (
 		FIELDTERMINATOR = ';',
 		ROWTERMINATOR = '\n',
-		FIRSTROW = 2
+		FIRSTROW = 2,
+		FORMAT = 'CSV',
+		maxerrors = 0
 	);
 
 	BULK INSERT Returns
@@ -62,15 +65,20 @@ BEGIN TRY
 	WITH (
 		FIELDTERMINATOR = ';',
 		ROWTERMINATOR = '\n',
-		FIRSTROW = 2
+		FIRSTROW = 2,
+		FORMAT = 'CSV',
+		maxerrors = 0
 	);
+
 
 	BULK INSERT People
 	FROM 'C:\Users\ianto\Desktop\SQL Data Model\Sample - Superstore_3.csv'
 	WITH (
 		FIELDTERMINATOR = ';',
 		ROWTERMINATOR = '\n',
-		FIRSTROW = 2
+		FIRSTROW = 2,
+		FORMAT = 'CSV',
+		maxerrors = 0
 	);
 
 	INSERT INTO CaricamentiLog (NomeFile,DataCaricamento,NumeroRigheCaricate,ErroreCaricamento)
@@ -78,7 +86,7 @@ BEGIN TRY
 		GETDATE(),
 		(SELECT COUNT(*) FROM Orders)+(SELECT COUNT(*) FROM Returns)+(SELECT COUNT(*) FROM People),
 		NULL
-	
+
 END TRY
 BEGIN CATCH
 
@@ -86,6 +94,138 @@ BEGIN CATCH
 	SELECT 'Sample - Superstore.xls',
 		GETDATE(),
 		NULL,
-		ERROR_MESSAGE()
+		ERROR_MESSAGE();
 
+	THROW
 END CATCH
+
+CREATE DATABASE Silver_Layer
+GO
+USE Silver_Layer
+
+CREATE TABLE Orders(
+	RowID INT NOT NULL PRIMARY KEY,
+	OrderID VARCHAR(255) NOT NULL,
+	OrderDate DATE NOT NULL,
+	ShipDate DATE NULL,
+	ShipMode VARCHAR(255) NULL,
+	CustomerID VARCHAR(255) NOT NULL,
+	CustomerName VARCHAR(255) NULL,
+	Segment VARCHAR(255) NULL,
+	Country VARCHAR(255) NULL,
+	City VARCHAR(255) NULL,
+	State VARCHAR(255) NULL,
+	PostalCode VARCHAR(255) NULL,
+	Region VARCHAR(255) NULL,
+	ProductID VARCHAR(255) NOT NULL,
+	Category VARCHAR(255) NULL,
+	Sub_Category VARCHAR(255) NULL,
+	ProductName VARCHAR(255) NULL,
+	Sales DECIMAL(18,4) NOT NULL,
+	Quantity DECIMAL(18,4) NOT NULL,
+	Discount DECIMAL(18,4) NOT NULL,
+	Profit DECIMAL(18,4) NOT NULL);
+
+CREATE UNIQUE INDEX IX_GRANULARITA 
+ON Orders(OrderID,ProductID)
+
+CREATE TABLE People(
+Person VARCHAR(255) PRIMARY KEY,
+Region VARCHAR(255) NOT NULL);
+
+CREATE TABLE CaricamentiLog(
+NomeProcedura VARCHAR(255),
+DataCaricamento DATETIME,
+NumeroRigheCaricate INT,
+ErroreCaricamento VARCHAR(255))
+
+USE Silver_Layer
+GO
+CREATE OR ALTER PROCEDURE CaricaSampleSuperstoreSilver AS
+SET XACT_ABORT ON
+SET NOCOUNT ON
+BEGIN
+BEGIN TRY
+
+	TRUNCATE TABLE People;
+
+	INSERT INTO People(Person,Region)
+	SELECT Person, Region
+	FROM   Bronze_Layer.dbo.People;
+
+	TRUNCATE TABLE Silver_Layer.dbo.Orders
+
+	INSERT INTO Silver_Layer.dbo.Orders(RowID,OrderID,OrderDate,ShipDate,ShipMode
+	,CustomerID,CustomerName,Segment,Country,City,State,PostalCode,Region,ProductID
+	,Category,Sub_Category,ProductName,Sales,Quantity,Discount,Profit)
+	SELECT MIN(CONVERT(INT,RowID)) AS RowID
+	,O.OrderID
+	,CONVERT(DATE,OrderDate,103) AS OrderDate
+	,CONVERT(DATE,ShipDate,103) AS ShipDate
+	,ShipMode
+	,CustomerID
+	,CustomerName
+	,Segment
+	,CASE WHEN Country = 'USA'
+	       THEN 'United States' 
+		   ELSE Country 
+     END   AS    Country 
+	,City
+	,State
+	,PostalCode
+	,Region
+	,ProductID
+	,Category
+	,Sub_Category
+	,ProductName
+	,SUM(convert(decimal(18,4),REPLACE(Sales,',','.'))) AS Sales
+	,SUM(convert(decimal(18,4),REPLACE(Quantity,',','.'))) as Quantity
+	,SUM(convert(decimal(18,4),REPLACE(Discount,',','.'))) as Discount
+	,SUM(convert(decimal(18,4),REPLACE(Profit,',','.'))) as Profit
+	FROM Bronze_Layer.dbo.Orders AS O
+	left JOIN (select distinct orderID from Bronze_Layer.dbo.Returns) as r
+		on o.OrderID = r.orderID
+	WHERE R.orderID IS NULL
+	GROUP BY 
+	O.OrderID
+	,CONVERT(DATE,OrderDate,103)
+	,CONVERT(DATE,ShipDate,103) 
+	,ShipMode
+	,CustomerID
+	,CustomerName
+	,Segment
+	,CASE WHEN Country = 'USA'
+	       THEN 'United States' 
+		   ELSE Country 
+     END   
+	,City
+	,State
+	,PostalCode
+	,Region
+	,ProductID
+	,Category
+	,Sub_Category
+	,ProductName
+
+	INSERT INTO CaricamentiLog (NomeProcedura,DataCaricamento,NumeroRigheCaricate,ErroreCaricamento)
+	SELECT 'CaricaSampleSuperstoreSilver',
+		GETDATE(),
+		(SELECT COUNT(*) FROM People)+(SELECT COUNT(*) FROM Orders),
+		NULL
+END TRY
+BEGIN CATCH
+	INSERT INTO CaricamentiLog (NomeProcedura,DataCaricamento,NumeroRigheCaricate,ErroreCaricamento)
+	SELECT 'CaricaSampleSuperstoreSilver',
+		GETDATE(),
+		NULL,
+		ERROR_MESSAGE();
+
+	THROW
+END CATCH
+END
+
+USE Bronze_Layer
+EXEC CaricaSampleSuperstore
+
+USE SILVER_Layer
+exec CaricaSampleSuperstoreSilver
