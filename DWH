@@ -33,3 +33,53 @@ OrderID VARCHAR(255));
 CREATE TABLE People(
 Person VARCHAR(255),
 Region VARCHAR(255));
+
+ALTER PROCEDURE CaricaSampleSuperstore AS
+SET XACT_ABORT ON
+BEGIN TRY
+	TRUNCATE TABLE Orders
+
+	TRUNCATE TABLE Returns
+
+	TRUNCATE TABLE People
+
+	BULK INSERT Orders
+	FROM 'C:\Users\ianto\Desktop\SQL Data Model\Sample - Superstore_1.csv'
+	WITH (
+		FIELDTERMINATOR = ';',
+		ROWTERMINATOR = '\n',
+		FIRSTROW = 2
+	);
+
+	BULK INSERT Returns
+	FROM 'C:\Users\ianto\Desktop\SQL Data Model\Sample - Superstore_2.csv'
+	WITH (
+		FIELDTERMINATOR = ';',
+		ROWTERMINATOR = '\n',
+		FIRSTROW = 2
+	);
+
+	BULK INSERT People
+	FROM 'C:\Users\ianto\Desktop\SQL Data Model\Sample - Superstore_3.csv'
+	WITH (
+		FIELDTERMINATOR = ';',
+		ROWTERMINATOR = '\n',
+		FIRSTROW = 2
+	);
+
+	INSERT INTO CaricamentiLog (NomeFile,DataCaricamento,NumeroRigheCaricate,ErroreCaricamento)
+	SELECT 'Sample - Superstore.xls',
+		GETDATE(),
+		(SELECT COUNT(*) FROM Orders)+(SELECT COUNT(*) FROM Returns)+(SELECT COUNT(*) FROM People),
+		NULL
+	
+END TRY
+BEGIN CATCH
+
+	INSERT INTO CaricamentiLog (NomeFile,DataCaricamento,NumeroRigheCaricate,ErroreCaricamento)
+	SELECT 'Sample - Superstore.xls',
+		GETDATE(),
+		NULL,
+		ERROR_MESSAGE()
+
+END CATCH
