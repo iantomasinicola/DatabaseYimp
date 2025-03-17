@@ -1,5 +1,5 @@
 CREATE DATABASE Bronze_Layer
-
+GO
 USE Bronze_Layer
 
 CREATE TABLE Orders(
@@ -40,6 +40,7 @@ DataCaricamento DATETIME,
 NumeroRigheCaricate INT,
 ErroreCaricamento VARCHAR(255))
 
+GO
 CREATE OR ALTER PROCEDURE CaricaSampleSuperstore AS
 SET XACT_ABORT ON
 SET NOCOUNT ON
@@ -99,6 +100,8 @@ BEGIN CATCH
 	THROW
 END CATCH
 
+GO
+
 CREATE DATABASE Silver_Layer
 GO
 USE Silver_Layer
@@ -137,8 +140,9 @@ CREATE TABLE CaricamentiLog(
 NomeProcedura VARCHAR(255),
 DataCaricamento DATETIME,
 NumeroRigheCaricate INT,
-ErroreCaricamento VARCHAR(255))
+ErroreCaricamento VARCHAR(255));
 
+GO
 USE Silver_Layer
 GO
 CREATE OR ALTER PROCEDURE CaricaSampleSuperstoreSilver AS
