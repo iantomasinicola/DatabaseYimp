@@ -34,6 +34,12 @@ CREATE TABLE People(
 Person VARCHAR(255),
 Region VARCHAR(255));
 
+CREATE TABLE CaricamentiLog(
+NomeFile VARCHAR(255),
+DataCaricamento DATETIME,
+NumeroRigheCaricate INT,
+ErroreCaricamento VARCHAR(255))
+
 ALTER PROCEDURE CaricaSampleSuperstore AS
 SET XACT_ABORT ON
 BEGIN TRY
