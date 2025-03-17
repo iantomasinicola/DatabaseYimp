@@ -233,3 +233,45 @@ EXEC CaricaSampleSuperstore
 
 USE SILVER_Layer
 exec CaricaSampleSuperstoreSilver
+
+CREATE DATABASE Golden_Layer
+
+CREATE TABLE DimTempo(
+	IdTempo INT PRIMARY KEY,
+	TempoDate DATE NOT NULL,
+	DayDate INT NOT NULL,
+	MonthDate INT NOT NULL,
+	YearDate INT NOT NULL)
+
+CREATE TABLE DimCustomer(
+	CustomerID INT PRIMARY KEY IDENTITY(1,1),
+	CustomerIDOriginal VARCHAR(255) NOT NULL,
+	CustomerName VARCHAR(255) NOT NULL,	
+	Segment VARCHAR(255) NULL,
+	Country VARCHAR(255) NULL,	
+	City VARCHAR(255) NULL,
+	State VARCHAR(255) NULL,	
+	Postal VARCHAR(255) NULL, 
+	Code VARCHAR(255) NULL,
+	Region VARCHAR(255) NULL)
+
+CREATE UNIQUE INDEX IX_Granularità ON DimCustomer(CustomerIDOriginal)
+
+CREATE TABLE DimProduct(
+	ProductID INT PRIMARY KEY IDENTITY(1,1),
+	ProductIDOriginal VARCHAR(255) NOT NULL,
+	CustomerName VARCHAR(255) NOT NULL,	
+	Segment VARCHAR(255) NULL,
+
+CREATE TABLE FactSells(
+	ID INT PRIMARY KEY IDENTITY(1,1),
+	OrderID INT NOT NULL,
+	OrderDate INT NOT NULL,
+	ShipDate INT NOT NULL,
+	ShipMode VARCHAR(255) NOT NULL,
+	CustomerID int not null,
+	ProductID INT NOT NULL,
+	Sales DECIMAL(18,4) NOT NULL,
+	Quantity DECIMAL(18,4) NOT NULL,	
+	Discount DECIMAL(18,4) NOT NULL,
+	Profit DECIMAL(18,4) NOT NULL)
