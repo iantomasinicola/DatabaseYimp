@@ -40,7 +40,7 @@ DataCaricamento DATETIME,
 NumeroRigheCaricate INT,
 ErroreCaricamento VARCHAR(255))
 
-ALTER PROCEDURE CaricaSampleSuperstore AS
+CREATE OR ALTER PROCEDURE CaricaSampleSuperstore AS
 SET XACT_ABORT ON
 BEGIN TRY
 	TRUNCATE TABLE Orders
