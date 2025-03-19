@@ -250,15 +250,19 @@ CREATE TABLE DimCustomer(
 	CustomerID INT PRIMARY KEY IDENTITY(1,1),
 	CustomerIDOriginal VARCHAR(255) NOT NULL,
 	CustomerName VARCHAR(255) NOT NULL,	
-	Segment VARCHAR(255) NULL,
+	Segment VARCHAR(255) NULL)
+	
+CREATE UNIQUE INDEX IX_Granularità ON DimCustomer(CustomerIDOriginal)
+
+create TABLE DimCity(
+	CityID INT PRIMARY KEY identity(1,1),
 	Country VARCHAR(255) NULL,	
 	City VARCHAR(255) NULL,
 	State VARCHAR(255) NULL,	
-	Postal VARCHAR(255) NULL, 
-	Code VARCHAR(255) NULL,
+	PostalCode VARCHAR(255) NULL, 
 	Region VARCHAR(255) NULL)
 
-CREATE UNIQUE INDEX IX_Granularità ON DimCustomer(CustomerIDOriginal)
+CREATE UNIQUE INDEX IX_GRANULARITY ON DimCity(CityID)
 
 CREATE TABLE DimProduct(
 	ProductID INT PRIMARY KEY IDENTITY(1,1),
@@ -271,9 +275,10 @@ CREATE UNIQUE INDEX IX_Granularità ON DimProduct(ProductIDOriginal)
 
 CREATE TABLE FactSells(
 	ID INT PRIMARY KEY IDENTITY(1,1),
-	OrderID INT NOT NULL,
+	OrderID VARCHAR(255) NOT NULL,
 	CustomerID int not null,
 	ProductID INT NOT NULL,
+	CityID INT NOT NULL,
 	OrderDate INT NOT NULL,
 	ShipDate INT NOT NULL,
 	ShipMode VARCHAR(255) NOT NULL,
@@ -284,8 +289,83 @@ CREATE TABLE FactSells(
 	FOREIGN KEY(CustomerID) REFERENCES DimCustomer(CustomerID),
 	FOREIGN KEY(ProductID) REFERENCES DimProduct(ProductID),
 	FOREIGN KEY(OrderDate) REFERENCES DimTempo(IdTempo),
-	FOREIGN KEY(ShipDate) REFERENCES DimTempo(IdTempo)
+	FOREIGN KEY(ShipDate) REFERENCES DimTempo(IdTempo),
+	FOREIGN KEY(CityID) REFERENCES DimCity(CityID)
 	)
 
 CREATE UNIQUE INDEX IX_Granularità ON FactSells(OrderID,ProductID)
+
+
+DECLARE @StartDate DATE = '2010-01-01';
+DECLARE @EndDate DATE = '2019-12-31';
+DECLARE @CurrentDate DATE = @StartDate;
+
+WHILE @CurrentDate <= @EndDate
+BEGIN
+    INSERT INTO DimTempo (IdTempo, TempoDate, DayDate, MonthDate, YearDate)
+    VALUES ( CAST(YEAR(@CurrentDate) * 10000 + MONTH(@CurrentDate) * 100 + DAY(@CurrentDate) AS INT), @CurrentDate, DAY(@CurrentDate), MONTH(@CurrentDate), YEAR(@CurrentDate));
+    
+    SET @CurrentDate = DATEADD(DAY, 1, @CurrentDate);
+END;
+
+
+INSERT INTO Golden_Layer.dbo.DimProduct(ProductIDOriginal,
+	Category,SubCategory ,ProductName)
+SELECT  ProductID,Category,Sub_Category,MIN(ProductName)
+FROM Silver_Layer.DBO.Orders
+GROUP BY ProductID,Category,Sub_Category
+
+
+INSERT INTO Golden_Layer.dbo.DimCustomer(
+CustomerIDOriginal,CustomerName,Segment)
+SELECT DISTINCT CustomerID,CustomerName,Segment
+FROM Silver_Layer.DBO.Orders
+
+INSERT INTO Golden_Layer.dbo.DimCity(
+	Country,	
+	City,
+	State,	
+	PostalCode, 
+	Region)
+SELECT DISTINCT Country,City,State,PostalCode,Region
+FROM Silver_Layer.DBO.Orders
+
+
+INSERT INTO FactSells(
+OrderID,CustomerID,ProductID,CityID,OrderDate,ShipDate,
+ShipMode,Sales,Quantity,Discount,Profit)
+SELECT o.OrderID,C.CustomerID,P.ProductID,Cy.CityID, T1.IdTempo as OrderDate,
+t2.IdTempo as ShipDate, o.ShipMode,o.Sales,o.Quantity,o.Discount,o.Profit
+FROM Silver_Layer.DBO.Orders AS O
+LEFT JOIN DimCustomer AS C
+	ON O.CustomerID = C.CustomerIDOriginal
+LEFT JOIN DimProduct AS P
+	ON O.ProductID = P.ProductIDOriginal
+LEFT JOIN DimCity AS Cy
+	ON O.City = Cy.City
+LEFT JOIN DimTempo AS t1
+	ON O.OrderDate = t1.TempoDate
+LEFT JOIN DimTempo AS t2
+	ON O.ShipDate = t2.TempoDate
+
+
+SELECT *
+FROM FactSells  
+
+SELECT * 
+FROM DimCustomer
+
+SELECT * 
+FROM DimProduct
+
+SELECT *
+FROM DimCity
+
+SELECT * 
+FROM DimTEMPO 
+
+
+
+
+
 
