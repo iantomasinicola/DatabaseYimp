@@ -262,7 +262,7 @@ create TABLE DimCity(
 	PostalCode VARCHAR(255) NULL, 
 	Region VARCHAR(255) NULL)
 
-CREATE UNIQUE INDEX IX_GRANULARITY ON DimCity(CityID)
+CREATE UNIQUE INDEX IX_GRANULARITY ON DimCity(City,PostalCode )
 
 CREATE TABLE DimProduct(
 	ProductID INT PRIMARY KEY IDENTITY(1,1),
@@ -343,28 +343,11 @@ LEFT JOIN DimProduct AS P
 	ON O.ProductID = P.ProductIDOriginal
 LEFT JOIN DimCity AS Cy
 	ON O.City = Cy.City
+	AND O.PostalCode = CY.PostalCode
 LEFT JOIN DimTempo AS t1
 	ON O.OrderDate = t1.TempoDate
 LEFT JOIN DimTempo AS t2
 	ON O.ShipDate = t2.TempoDate
-
-
-SELECT *
-FROM FactSells  
-
-SELECT * 
-FROM DimCustomer
-
-SELECT * 
-FROM DimProduct
-
-SELECT *
-FROM DimCity
-
-SELECT * 
-FROM DimTEMPO 
-
-
 
 
 
