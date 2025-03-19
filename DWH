@@ -234,7 +234,10 @@ EXEC CaricaSampleSuperstore
 USE SILVER_Layer
 exec CaricaSampleSuperstoreSilver
 
+go
 CREATE DATABASE Golden_Layer
+go
+use Golden_Layer
 
 CREATE TABLE DimTempo(
 	IdTempo INT PRIMARY KEY,
@@ -260,18 +263,29 @@ CREATE UNIQUE INDEX IX_Granularità ON DimCustomer(CustomerIDOriginal)
 CREATE TABLE DimProduct(
 	ProductID INT PRIMARY KEY IDENTITY(1,1),
 	ProductIDOriginal VARCHAR(255) NOT NULL,
-	CustomerName VARCHAR(255) NOT NULL,	
-	Segment VARCHAR(255) NULL,
+	Category VARCHAR(255) NULL,
+	SubCategory VARCHAR(255) NULL,
+	ProductName VARCHAR(255) NULL)
+
+CREATE UNIQUE INDEX IX_Granularità ON DimProduct(ProductIDOriginal)
 
 CREATE TABLE FactSells(
 	ID INT PRIMARY KEY IDENTITY(1,1),
 	OrderID INT NOT NULL,
+	CustomerID int not null,
+	ProductID INT NOT NULL,
 	OrderDate INT NOT NULL,
 	ShipDate INT NOT NULL,
 	ShipMode VARCHAR(255) NOT NULL,
-	CustomerID int not null,
-	ProductID INT NOT NULL,
 	Sales DECIMAL(18,4) NOT NULL,
 	Quantity DECIMAL(18,4) NOT NULL,	
 	Discount DECIMAL(18,4) NOT NULL,
-	Profit DECIMAL(18,4) NOT NULL)
+	Profit DECIMAL(18,4) NOT NULL,
+	FOREIGN KEY(CustomerID) REFERENCES DimCustomer(CustomerID),
+	FOREIGN KEY(ProductID) REFERENCES DimProduct(ProductID),
+	FOREIGN KEY(OrderDate) REFERENCES DimTempo(IdTempo),
+	FOREIGN KEY(ShipDate) REFERENCES DimTempo(IdTempo)
+	)
+
+CREATE UNIQUE INDEX IX_Granularità ON FactSells(OrderID,ProductID)
+
