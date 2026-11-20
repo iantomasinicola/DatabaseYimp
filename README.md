@@ -18,7 +18,6 @@ Su SQL Server gli script creano un database, su MySQL e PostgreSQL uno schema.
 | 03_Normalizzazione di un database.sql, CodiceDbNonNormalizzato.txt | Esercizio sulla normalizzazione di un database |
 | DWH, Sample - Superstore_1/2/3.csv | Script SQL Server per un Data Warehouse a livelli, a partire dal livello Bronze, sui dati di vendita Superstore |
 | Lezioni_settembre_Querying_SQL_Server.sql | Esempi delle lezioni su SQL Server, tra cui transazioni e livelli di isolamento |
-| Projectwork_20250904, Workshop_4_settembre.pdf 
 | Clienti.csv, Fatture.xlsx, Excel.xlsx | File per esercitarsi con l'importazione dei dati |
 
 ## Come usarli
